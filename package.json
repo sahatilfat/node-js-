@@ -4,7 +4,8 @@
   "description": "Rest full API dengan Node Js",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
   },
   "keywords": [
     "membangun",
@@ -17,6 +18,10 @@
   "author": "sahat",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.1"
+    "body-parse": "^0.1.0",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.9"
   }
 }

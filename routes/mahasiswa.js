@@ -1,5 +1,4 @@
 const express = require("express");
-const { route } = require("../app");
 const router = express.Router();
 
 router.get("/", (req, res, next) => {
@@ -9,8 +8,13 @@ router.get("/", (req, res, next) => {
 });
 
 router.post("/", (req, res, next) => {
+  const mahasiswa = {
+    nim: req.body.nim,
+    nama: req.body.nama,
+  };
   res.status(200).json({
     message: "Post Method mahasiswa",
+    data: mahasiswa,
   });
 });
 
