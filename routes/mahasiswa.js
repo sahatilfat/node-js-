@@ -35,15 +35,22 @@ router.post("/", (req, res, next) => {
   });
 });
 
-router.get("/:nim", (req, res, next) => {
-  const nim = req.params.nim;
+router.get("/search", (req, res, next) => {
+  const nim = req.query.nim;
   var sql = "SELECT * FROM mahasiswa WHERE nim=" + nim;
   db.query(sql, (err, result) => {
     if (err) throw err;
-    res.status(200).json({
-      message: "Mahasiswa Ditemukan",
-      data: result,
-    });
+    if (result.length > 0) {
+      res.status(200).json({
+        message: "Mahasiswa Ditemukan",
+        data: result,
+      });
+    } else {
+      res.status(200).json({
+        message: "Mahasiswa Tidak Ditemukan",
+        data: result,
+      });
+    }
   });
 });
 
