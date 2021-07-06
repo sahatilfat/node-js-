@@ -13,6 +13,7 @@ controller.getAll = async function (req, res) {
         ["alamat", "alamat"],
         ["angkatan", "tahunAngkatan"],
       ],
+      include: [{ model: model.jurusan }],
       where: {
         [Op.or]: [{ nama: "Sandi" }, { kd_jurusan: "Biologi" }],
       },
@@ -135,6 +136,7 @@ controller.getSearch = async function (req, res) {
         ["alamat", "alamat"],
         ["angkatan", "tahunAngkatan"],
       ],
+
       where: {
         [Op.or]: [
           {

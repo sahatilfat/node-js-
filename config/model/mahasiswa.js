@@ -1,5 +1,6 @@
 const Sequelize = require("sequelize");
 const db = require("../database/mysql");
+const jurusan = require("./jurusan");
 
 var mahasiswa = db.define(
   "mahasiswa",
@@ -15,6 +16,10 @@ var mahasiswa = db.define(
     timestamps: false, //sequalize juga secara default akan memanggil field yg namanya "createAdd" dan "UpdatedAdd", dan karena di tabel mahasiswa field itu belum ada, maka utk sementara di isi false
   }
 );
+
+// menambahkan foreign key utk join
+mahasiswa.hasOne(jurusan, { foreignKey: "kd_jurusan" });
+mahasiswa.belongsTo(jurusan, { foreignKey: "kd_jurusan" });
 
 mahasiswa.removeAttribute("id"); //secara difault sequelize akan memanggil fields id dari tabel mahasiswa, karena di tabel mahasiswa tidak ada fields yg bernama 'id', maka utk sementara akan di remove dulu
 module.exports = mahasiswa;
