@@ -1,10 +1,22 @@
 const { restart } = require("nodemon");
 const model = require("../config/model/index");
 const controller = {};
+const { Op } = require("sequelize");
 
 controller.getAll = async function (req, res) {
   try {
-    let mahasiswa = await model.mahasiswa.findAll();
+    let mahasiswa = await model.mahasiswa.findAll({
+      attributes: [
+        ["nim", "nimMahasiswa"],
+        ["nama", "namaMahasiswa"],
+        ["kd_jurusan", "kodeJurusan"],
+        ["alamat", "alamat"],
+        ["angkatan", "tahunAngkatan"],
+      ],
+      where: {
+        [Op.or]: [{ nama: "Sandi" }, { kd_jurusan: "Biologi" }],
+      },
+    });
     if (mahasiswa.length > 0) {
       res.status(200).json({
         message: "Get Semua Mahasiswa",
@@ -109,6 +121,50 @@ controller.delete = async function (req, res) {
         message: error.message,
       });
     }
+  }
+};
+
+controller.getSearch = async function (req, res) {
+  const search = req.query.keyword;
+  try {
+    let mahasiswa = await model.mahasiswa.findAll({
+      attributes: [
+        ["nim", "nimMahasiswa"],
+        ["nama", "namaMahasiswa"],
+        ["kd_jurusan", "kodeJurusan"],
+        ["alamat", "alamat"],
+        ["angkatan", "tahunAngkatan"],
+      ],
+      where: {
+        [Op.or]: [
+          {
+            nim: {
+              [Op.like]: ["%" + search + "%"],
+            },
+          },
+          {
+            nama: {
+              [Op.like]: ["%" + search + "%"],
+            },
+          },
+        ],
+      },
+    });
+    if (mahasiswa.length > 0) {
+      res.status(200).json({
+        message: "Mahasiswa Ditemukan",
+        data: mahasiswa,
+      });
+    } else {
+      res.status(200).json({
+        message: "Tidak Ada Data",
+        data: [],
+      });
+    }
+  } catch (error) {
+    res.status(404).json({
+      message: error.message,
+    });
   }
 };
 
