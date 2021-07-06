@@ -4,80 +4,9 @@ const db = require("../config/database/mysql");
 const controller = require("../controller/index");
 
 router.get("/", controller.mahasiswa.getAll);
-
-router.post("/", (req, res, next) => {
-  const nim = req.body.nim;
-  const nama = req.body.nama;
-  const jurusan = req.body.jurusan;
-
-  var sql =
-    "INSERT INTO mahasiswa (nim, nama, jurusan) VALUES ('" +
-    nim +
-    "', '" +
-    nama +
-    "', '" +
-    jurusan +
-    "')";
-
-  db.query(sql, (err, result) => {
-    if (err) throw err;
-    res.status(200).json({
-      message: "Berhasil Tambah Data Mahasiswa",
-    });
-  });
-});
-
-router.get("/search", (req, res, next) => {
-  const nim = req.query.nim;
-  var sql = "SELECT * FROM mahasiswa WHERE nim=" + nim;
-  db.query(sql, (err, result) => {
-    if (err) throw err;
-    if (result.length > 0) {
-      res.status(200).json({
-        message: "Mahasiswa Ditemukan",
-        data: result,
-      });
-    } else {
-      res.status(200).json({
-        message: "Mahasiswa Tidak Ditemukan",
-        data: result,
-      });
-    }
-  });
-});
-
-router.put("/", (req, res, next) => {
-  const nim = req.body.nim;
-  const nama = req.body.nama;
-  const jurusan = req.body.jurusan;
-
-  var sql =
-    "UPDATE mahasiswa SET nama ='" +
-    nama +
-    "', jurusan = '" +
-    jurusan +
-    "'WHERE nim = " +
-    nim;
-
-  db.query(sql, (err, result) => {
-    if (err) throw err;
-    res.status(200).json({
-      message: "Berhasil Ubah Data Mahasiswa",
-    });
-  });
-});
-
-router.delete("/:nim", (req, res, next) => {
-  const nim = req.params.nim;
-
-  var sql = "DELETE FROM mahasiswa WHERE nim=" + nim;
-
-  db.query(sql, (err, result) => {
-    if (err) throw err;
-    res.status(200).json({
-      message: "Berhasil Delete Data Mahasiswa",
-    });
-  });
-});
+router.get("/:nim", controller.mahasiswa.getOne);
+router.post("/", controller.mahasiswa.post);
+router.put("/:nim", controller.mahasiswa.put);
+router.delete("/:nim", controller.mahasiswa.delete);
 
 module.exports = router;
