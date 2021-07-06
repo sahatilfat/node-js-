@@ -11,6 +11,7 @@ app.use(bodyParse.urlencoded({ extended: false }));
 app.use(bodyParse.json());
 
 app.use("/mahasiswa", mahasiswaRoutes);
+app.use("/assets", express.static("assets")); //berguna utk jika kita langsung ingin melakukan pencarian gambar yg kita upload di browser
 
 // jika ada route yg belum didefinisikan, maka akan di arahkan ke function berikut ini:
 app.use((req, res, next) => {

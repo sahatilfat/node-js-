@@ -10,6 +10,7 @@ var mahasiswa = db.define(
     kd_jurusan: Sequelize.STRING,
     alamat: Sequelize.STRING,
     angkatan: Sequelize.STRING,
+    foto: Sequelize.STRING,
   },
   {
     freezeTableName: true, //secara default, ketika sequelize memanggil database, maka di belakang nama tabel akan ditambahkan s (mahasiswas), maka perlu dihilangkan dg freeze

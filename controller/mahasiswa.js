@@ -5,19 +5,7 @@ const { Op } = require("sequelize");
 
 controller.getAll = async function (req, res) {
   try {
-    let mahasiswa = await model.mahasiswa.findAll({
-      attributes: [
-        ["nim", "nimMahasiswa"],
-        ["nama", "namaMahasiswa"],
-        ["kd_jurusan", "kodeJurusan"],
-        ["alamat", "alamat"],
-        ["angkatan", "tahunAngkatan"],
-      ],
-      include: [{ model: model.jurusan }],
-      where: {
-        [Op.or]: [{ nama: "Sandi" }, { kd_jurusan: "Biologi" }],
-      },
-    });
+    let mahasiswa = await model.mahasiswa.findAll();
     if (mahasiswa.length > 0) {
       res.status(200).json({
         message: "Get Semua Mahasiswa",
@@ -66,7 +54,10 @@ controller.post = async function (req, res) {
     let mahasiswa = await model.mahasiswa.create({
       nim: req.body.nim,
       nama: req.body.nama,
-      jurusan: req.body.jurusan,
+      kd_jurusan: req.body.kd_jurusan,
+      alamat: req.body.alamat,
+      angkatan: req.body.angkatan,
+      foto: req.file.path,
     });
     res.status(201).json({
       message: "Berhasil Tambah Data Mahasiswa",
