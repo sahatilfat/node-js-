@@ -22,12 +22,14 @@ function basicAuthResponse(req) {
 }
 
 const mahasiswaRoutes = require("./routes/mahasiswa");
+const axiosRoutes = require("./routes/axios");
 
 app.use(morgan("dev")); //ini di isi dev karena kita masih tahap developer
 app.use(bodyParse.urlencoded({ extended: false }));
 app.use(bodyParse.json());
 
 app.use("/mahasiswa", mahasiswaRoutes);
+app.use("/axios", axiosRoutes);
 app.use("/assets", express.static("assets")); //berguna utk jika kita langsung ingin melakukan pencarian gambar yg kita upload di browser
 
 // jika ada route yg belum didefinisikan, maka akan di arahkan ke function berikut ini:
